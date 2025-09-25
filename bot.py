@@ -4,13 +4,13 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 from diffusers import StableDiffusionPipeline
 import torch
 
-# Load the model once at startup
-print("Loading model...")
-pipe = StableDiffusionPipeline.from_single_file(
+# Load the full model from local .safetensors file
+print("🔄 Loading model...")
+pipe = StableDiffusionPipeline.from_ckpt(
     "model.safetensors", torch_dtype=torch.float16
 )
 pipe.to("cuda" if torch.cuda.is_available() else "cpu")
-print("Model loaded successfully!")
+print("✅ Model loaded and ready!")
 
 # Telegram bot handlers
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
